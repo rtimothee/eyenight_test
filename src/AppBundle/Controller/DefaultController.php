@@ -18,4 +18,12 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
     }
+
+
+    /**
+     * @Route("/cgi", name="cgi")
+     */
+    public function cgiAction(){
+        return $this->render('default/cgi.html.twig', []);
+    }
 }
