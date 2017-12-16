@@ -21,9 +21,9 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/cgi", name="cgi")
+     * @Route("/cgv", name="cgv")
      */
-    public function cgiAction(){
-        return $this->render('default/cgi.html.twig', []);
+    public function cgvAction(){
+        return $this->render('default/cgv.html.twig', []);
     }
 }

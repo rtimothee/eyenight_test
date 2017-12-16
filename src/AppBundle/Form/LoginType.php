@@ -17,6 +17,8 @@ class LoginType extends AbstractType
         $builder
             ->add('login', TextType::class)
             ->add('password', PasswordType::class)
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, array(
+                "label" => "login"
+            ));
     }
 }

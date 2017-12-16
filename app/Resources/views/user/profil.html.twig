@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ dump(user) }}
+    <p>
+        {{ user.getLogin() }}<br/>
+        {{ user.getEmail() }}<br/>
+        <a href="{{ path('logout') }}">Logout</a><br/>
+        <a href="{{ path('delete_user') }}">Delete User</a>
+    </p>
 {% endblock %}

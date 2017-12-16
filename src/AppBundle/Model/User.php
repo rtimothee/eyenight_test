@@ -11,6 +11,7 @@ class User
     protected $login;
     protected $password;
     protected $email;
+    protected $token;
 
     private $userManager;
 
@@ -69,6 +70,23 @@ class User
         $this->email = $email;
     }
 
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed string
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+
     public function save()
     {
         $this->userManager->save($this);
@@ -78,4 +96,5 @@ class User
     {
         $this->userManager->login($this);
     }
+
 }

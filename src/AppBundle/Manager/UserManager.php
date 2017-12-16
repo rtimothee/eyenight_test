@@ -18,12 +18,44 @@ class UserManager implements UserManagerInterface
 
     public function save(User $user)
     {
-            $this->parse->signUp($user->getLogin(), md5($user->getPassword()), $user->getEmail());
+        return $this->parse->signUp($user->getLogin(), md5($user->getPassword()), $user->getEmail());
     }
 
 
     public function login(User $user)
     {
-        $this->parse->login($user->getLogin(), md5($user->getPassword()));
+        return $this->parse->login($user->getLogin(), md5($user->getPassword()));
+    }
+
+    public function isLogged()
+    {
+        return (null !== $this->parse->getCurrentUser());
+    }
+
+    public function logout()
+    {
+        $this->parse->logout();
+    }
+
+    public function getCurrent()
+    {
+        dump($this->parse->getInfos()); // TODO : A supprimer
+        $current = $this->parse->getCurrentUser();
+
+        if (null !== $current) {
+            $user = new User($this);
+            $user->setEmail($current["email"]);
+            $user->setlogin($current["login"]);
+            $user->setToken($current["token"]);
+
+            return $user;
+        }
+
+        return null;
+    }
+
+    public function removeCurrentUser()
+    {
+        $this->parse->removeUser();
     }
 }

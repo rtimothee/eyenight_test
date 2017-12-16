@@ -5,6 +5,8 @@ namespace AppBundle\Utils;
 
 use Parse\ParseClient;
 use Parse\ParseException;
+use Parse\ParseSchema;
+use Parse\ParseServerInfo;
 use Parse\ParseUser;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -17,9 +19,6 @@ class ParseHelper
     protected $master_key;
     protected $host;
 
-    /*    protected $login;
-        protected $password;*/
-
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -27,8 +26,6 @@ class ParseHelper
         $this->app_id = $this->container->getParameter('parse_app_id');
         $this->master_key = $this->container->getParameter('parse_client_key');
         $this->host = $this->container->getParameter('parse_host');
-        /*$this->login = $this->container->getParameter('parse_login');
-        $this->password = $this->container->getParameter('parse_password');*/
 
         $this->initialize();
 
@@ -40,7 +37,6 @@ class ParseHelper
         try {
             ParseClient::initialize($this->app_id, null, $this->master_key);
             ParseClient::setServerURL($this->host, 'parse');
-            ParseUser::logOut();
 
             $health = ParseClient::getServerHealth();
             if (200 !== $health["status"]) {
@@ -59,9 +55,12 @@ class ParseHelper
             try {
                 $user = ParseUser::logIn($login, $password);
             } catch (ParseException $error) {
-                dump($error->getMessage());
-                dump($error->getTraceAsString());
-                throw new Exception("Parse: login failed", 500);
+                if (101 === $error->getCode()) {
+                    throw new Exception("Parse: Invalid login/password", 500);
+                } else {
+                    throw new Exception("Parse: login failed", 500);
+                }
+
             }
         }
 
@@ -79,8 +78,6 @@ class ParseHelper
         try {
             $user->signUp();
         } catch (ParseException $ex) {
-            dump($ex->getMessage());
-            dump($ex->getTraceAsString());
             throw new Exception("Parse: Register failed", 500);
         }
 
@@ -90,6 +87,11 @@ class ParseHelper
     public function logout()
     {
         ParseUser::logOut();
+    }
+
+    public function getCurrentUser()
+    {
+        return $this->serializedUser(ParseUser::getCurrentUser());
     }
 
 
@@ -103,20 +105,30 @@ class ParseHelper
         */
     }
 
-    public function removeUser(){
+    public function removeUser()
+    {
         $user = ParseUser::getCurrentUser();
-        $user->destroy();
+        if (null !== $user) {
+            $user->destroy(true);
+        } else {
+            throw new Exception("Parse: Unauthorized Action", 500);
+        }
     }
 
-    private function serializedUser(ParseUser $user)
+    public function getInfos() // TODO : A supprimer
     {
-        return [
+        $schema = new ParseSchema();
+        return $schema->all();
+    }
+
+    private function serializedUser($user)
+    {
+        return (null !== $user) ? [
             "email" => $user->getEmail(),
             "login" => $user->getUsername(),
             "token" => $user->getSessionToken()
-        ];
+        ] : null;
     }
-
 
 
 }
