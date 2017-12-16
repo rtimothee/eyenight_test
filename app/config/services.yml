@@ -29,6 +29,11 @@ services:
         public: true
         arguments: ["@app.utils.parsehelper"]
 
+    app.manager.event:
+        class: AppBundle\Manager\EventManager
+        public: true
+        arguments: ["@app.utils.parsehelper"]
+
 
     # Custom Listeners
     app.listener.auth:
@@ -39,8 +44,8 @@ services:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     app.listener.exception:
-            class: AppBundle\EventSubscriber\ExceptionListener
-            public: true
-            arguments: ["@router", "@session"]
-            tags:
-                - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+        class: AppBundle\EventSubscriber\ExceptionListener
+        public: true
+        arguments: ["@router", "@session"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

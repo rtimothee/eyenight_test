@@ -5,8 +5,9 @@ namespace AppBundle\Utils;
 
 use Parse\ParseClient;
 use Parse\ParseException;
+use Parse\ParseObject;
+use Parse\ParseQuery;
 use Parse\ParseSchema;
-use Parse\ParseServerInfo;
 use Parse\ParseUser;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -94,17 +95,6 @@ class ParseHelper
         return $this->serializedUser(ParseUser::getCurrentUser());
     }
 
-
-    public function query()
-    {
-        /*
-        $query = new ParseQuery("TestObject");
-        $object = $query->get("anObjectId");
-        $query->limit(10); // default 100, max 1000
-        $results = $query->find();
-        */
-    }
-
     public function removeUser()
     {
         $user = ParseUser::getCurrentUser();
@@ -121,7 +111,34 @@ class ParseHelper
         return $schema->all();
     }
 
-    private function serializedUser($user)
+
+    public function getAll($objectName, $nb)
+    {
+        $query = new ParseQuery($objectName);
+        $query->limit($nb);
+        return $query->find();
+    }
+
+    public function get($objectName, $objectId)
+    {
+        $query = new ParseQuery($objectName);
+        try {
+            $object = $query->get($objectId);
+            return $object;
+        } catch (ParseException $ex) {
+            throw new Exception("Parse: Get object fail", 500);
+        }
+    }
+
+    public function getLinkedObjects($objectName, $searchObjectName, $searchObjectId)
+    {
+        $query = new ParseQuery($objectName);
+        $query->equalTo(strtolower($searchObjectName), new ParseObject($searchObjectName, $searchObjectId));
+        return $query->find();
+    }
+
+
+    private function serializedUser(ParseUser $user)
     {
         return (null !== $user) ? [
             "email" => $user->getEmail(),

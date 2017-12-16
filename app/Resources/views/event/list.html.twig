@@ -2,4 +2,22 @@
 
 {% block body %}
     <h1>List events</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Start</th>
+            <th>End</th>
+            <th></th>
+        </tr>
+    {% for event in events %}
+        <tr>
+            <td>{{ event.getName() }}</td>
+            <td>{{ event.getCity() }}</td>
+            <td>{{ event.getStartDate()|date("d/m/Y") }}</td>
+            <td>{{ event.getEndDate()|date("d/m/Y") }}</td>
+            <td><a href="{{ path('show_event', {'id': event.getId(), 'name':event.getName|url_encode}) }}">+</a></td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock %}
