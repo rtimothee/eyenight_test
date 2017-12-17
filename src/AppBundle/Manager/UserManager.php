@@ -39,9 +39,8 @@ class UserManager implements UserManagerInterface
 
     public function getCurrent()
     {
-        dump($this->parse->getInfos()); // TODO : A supprimer
         $current = $this->parse->getCurrentUser();
-
+        //dump($current);
         if (null !== $current) {
             $user = new User($this);
             $user->setEmail($current["email"]);

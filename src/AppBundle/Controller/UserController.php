@@ -66,7 +66,7 @@ class UserController extends Controller
 
             try {
                 $user->login();
-                return $this->redirectToRoute('profil');
+                return $this->redirectToRoute('list_events');
             } catch (\Exception $e) {
                 $session = new Session();
                 $session->getFlashBag()->add(
@@ -74,8 +74,6 @@ class UserController extends Controller
                     $e->getMessage()
                 );
             }
-
-            return $this->redirectToRoute('profil');
         }
 
         return $this->render('user/login.html.twig', [
@@ -113,9 +111,11 @@ class UserController extends Controller
         try {
             $userManager->removeCurrentUser();
         } catch (\Exception $e) {
-            dump($e->getMessage());
-            dump($e->getTrace());
-            die();
+            $session = new Session();
+            $session->getFlashBag()->add(
+                'error',
+                $e->getMessage()
+            );
         }
 
         return $this->redirectToRoute('register');

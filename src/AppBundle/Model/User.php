@@ -87,11 +87,17 @@ class User
     }
 
 
+    /**
+     * Save
+     */
     public function save()
     {
         $this->userManager->save($this);
     }
 
+    /**
+     * Login
+     */
     public function login()
     {
         $this->userManager->login($this);

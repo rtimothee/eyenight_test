@@ -7,6 +7,8 @@ use AppBundle\Model\Event;
 use AppBundle\Model\Product;
 use AppBundle\Utils\ParseHelper;
 use Parse\ParseObject;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class EventManager implements EventManagerInterface
 {
@@ -19,7 +21,16 @@ class EventManager implements EventManagerInterface
 
     public function getAllEvents()
     {
-        $allEvents = $this->parse->getAll('Event', 10);
+        try {
+            $allEvents = $this->parse->getAll('Event', 10);
+        }catch(\Exception $e){
+            if($e->getCode() === 209){
+                throw new \Exception("Parse : Unauthorized User", 209);
+            }
+            else{
+                throw new \Exception($e->getMessage(), 500);
+            }
+        }
         $events = [];
         foreach ($allEvents as $e) {
             $event = new Event($e->getObjectId());
@@ -46,7 +57,7 @@ class EventManager implements EventManagerInterface
         $parseProducts = $this->parse->getLinkedObjects("Product", "Event", $objectId);
         $products = [];
         foreach ($parseProducts as $p) {
-            $product = new Product($p->getObjectId(), $p->get('name'));
+            $product = new Product($p->getObjectId());
             $product = $this->mapDatas($p, $product);
             $products[] = $product;
         }

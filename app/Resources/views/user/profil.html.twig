@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container" style="text-align: center">
     <p>
         {{ user.getLogin() }}<br/>
         {{ user.getEmail() }}<br/>
         <a href="{{ path('logout') }}">Logout</a><br/>
         <a href="{{ path('delete_user') }}">Delete User</a>
     </p>
+    <p style="font-style: italic; color:#444;">Note : Par manque de contenu et de temps, je n'ai pas intégré cette page.</p>
+    </div>
 {% endblock %}

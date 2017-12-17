@@ -13,10 +13,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
-        ]);
+        $userManager = $this->get('app.manager.user');
+        $user = $userManager->getCurrent();
+        if (null === $user) {
+            return $this->redirectToRoute('login');
+        }
+        return $this->redirectToRoute('list_events');
     }
 
 

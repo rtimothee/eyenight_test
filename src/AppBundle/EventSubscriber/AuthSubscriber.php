@@ -29,8 +29,10 @@ class AuthSubscriber implements EventSubscriberInterface
 
         if ($controller[0] instanceof AuthController) {
             $userManager = $this->container->get('app.manager.user');
+
+            $user = $userManager->getCurrent();
             if (!$userManager->isLogged()) {
-                throw new NeedLoginRedirectException("You need to be logged for this page");
+                throw new NeedLoginRedirectException("You must be logged in to see this page");
             }
         }
     }

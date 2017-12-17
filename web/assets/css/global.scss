@@ -48,6 +48,20 @@ h1, h2, h3, h4 {
   background-image: url("/web/assets/img/background.jpg");
 }
 
+.alert.alert-error {
+  border: 1px solid red;
+  width: 90%;
+  margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: red;
+  background: #f7c5c5;
+  opacity: 0.7;
+}
+
+
 .loader_container {
   padding: 30px;
   display: flex;

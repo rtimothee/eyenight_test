@@ -20,6 +20,10 @@ class ParseHelper
     protected $master_key;
     protected $host;
 
+    /**
+     * ParseHelper constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -33,6 +37,9 @@ class ParseHelper
         return $this;
     }
 
+    /**
+     * Initialize Parse SDK
+     */
     public function initialize()
     {
         try {
@@ -49,6 +56,12 @@ class ParseHelper
         }
     }
 
+
+    /**
+     * @param $login
+     * @param $password
+     * @return array|null
+     */
     public function login($login, $password)
     {
         $user = ParseUser::getCurrentUser();
@@ -68,6 +81,12 @@ class ParseHelper
         return $this->serializedUser($user);
     }
 
+    /**
+     * @param $login
+     * @param $password
+     * @param $email
+     * @return array|null
+     */
     public function signUp($login, $password, $email)
     {
 
@@ -85,40 +104,61 @@ class ParseHelper
         return $this->serializedUser($user);
     }
 
+    /**
+     * Logout the current User
+     */
     public function logout()
     {
         ParseUser::logOut();
     }
 
+    /**
+     * @return array|null
+     */
     public function getCurrentUser()
     {
         return $this->serializedUser(ParseUser::getCurrentUser());
     }
 
+    /**
+     * Remove the Current User
+     */
     public function removeUser()
     {
         $user = ParseUser::getCurrentUser();
         if (null !== $user) {
             $user->destroy(true);
         } else {
-            throw new Exception("Parse: Unauthorized Action", 500);
+            throw new Exception("Parse: Unauthorized Action", 209);
         }
     }
 
-    public function getInfos() // TODO : A supprimer
-    {
-        $schema = new ParseSchema();
-        return $schema->all();
-    }
-
-
+    /**
+     * @param $objectName
+     * @param $nb
+     * @return ParseObject[]
+     */
     public function getAll($objectName, $nb)
     {
         $query = new ParseQuery($objectName);
-        $query->limit($nb);
-        return $query->find();
+        try {
+            $query->limit($nb);
+            return $query->find();
+        } catch (ParseException $ex) {
+            if (209 === $ex->getCode()) {
+                throw new Exception("Parse: User Unauthorized", 209);
+            } else {
+                throw new Exception("Parse: Get object fail", 500);
+            }
+        }
+
     }
 
+    /**
+     * @param $objectName
+     * @param $objectId
+     * @return array|ParseObject
+     */
     public function get($objectName, $objectId)
     {
         $query = new ParseQuery($objectName);
@@ -130,6 +170,12 @@ class ParseHelper
         }
     }
 
+    /**
+     * @param $objectName
+     * @param $searchObjectName
+     * @param $searchObjectId
+     * @return ParseObject[]
+     */
     public function getLinkedObjects($objectName, $searchObjectName, $searchObjectId)
     {
         $query = new ParseQuery($objectName);
@@ -138,7 +184,11 @@ class ParseHelper
     }
 
 
-    private function serializedUser(ParseUser $user)
+    /**
+     * @param $user
+     * @return array|null
+     */
+    private function serializedUser($user)
     {
         return (null !== $user) ? [
             "email" => $user->getEmail(),

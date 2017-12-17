@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        user_management: '@app.manager.user'
 
 # Doctrine Configuration
 doctrine:
