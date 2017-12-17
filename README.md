@@ -1,69 +1,36 @@
-Symfony Standard Edition
+Test technique Eyenight
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+**Temps :** 20h (2 soirées et la journée du samedi) 
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+**Stack Technique :**
 
-What's inside?
---------------
+- Parse (imposé)
+- Symfony 3.3
+- Sass
+- Webpack avec @symfony/webpack-encore
 
-The Symfony Standard Edition is configured with the following defaults:
+**Compatibilité :** FF, Chrome, Safari
 
-  * An AppBundle you can use to start coding;
+La compatibilité IE11 n'a pas pu être faite par faute de temps et d'accès à un windows. Cependant j'ai utilisé les Flexbox CSS3 qui ont un comportement différent sur IE donc il y a de fortes chances que le placement des div (header, footer, et liste des events) soit incorrect.
 
-  * Twig as the only configured template engine;
+Concepts mis en place / bonnes pratiques 
+-------
 
-  * Doctrine ORM/DBAL;
+- Git rebase régulier afin de garder un index de commit propre
+- Symfony :
+    - des interfaces pour les managers afin de pouvoir changer le système de base de donnée de manière simplifiée (Passer de Parse à un autre service par exemple)
+    - Listeners afin de faire des verifications sur l'authentification au chargement des pages
+- Intégration :
+    - Flexbox CSS3
+    - Ajax en Javascript natif plutôt qu'en jQuery pour éviter d'alourdir le chargement de la page
 
-  * Swiftmailer;
 
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.2/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.2/doctrine.html
-[8]:  https://symfony.com/doc/3.2/templating.html
-[9]:  https://symfony.com/doc/3.2/security.html
-[10]: https://symfony.com/doc/3.2/email.html
-[11]: https://symfony.com/doc/3.2/logging.html
-[12]: https://symfony.com/doc/3.2/assetic/asset_management.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
+A améliorer/ajouter
+-------
+- Ajouter des Tests unitaires
+- Unifier les Managers afin de respecter des standards de récupération de la donnée
+- Revoir et rendre plus générique le système de requêtes pour les relations entre les objets
+- Améliorer le système de connexion pour utiliser les Rôles Symfony et le SecurityBundle
+- Passer tout le Front en SPA (Single Page Application) afin d'obtenir plus de dynamisme et de fluidité
+- Liste des événements à trier par distance
