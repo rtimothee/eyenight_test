@@ -156,5 +156,26 @@
 }
 
 
+@media screen and (max-width: 800px) {
+  .event_header {
+    .legend {
+      padding: 10px 20px;
+      h3{
+        margin: 13px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .event_header {
+    .legend {
+      padding: 5px 20px;
+      h3{
+        margin: 5px;
+      }
+    }
+  }
+}
 
 

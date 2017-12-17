@@ -19,3 +19,14 @@ footer{
     }
   }
 }
+
+@media screen and (max-width: 690px) {
+  footer .container {
+    text-align: center;
+    #copyright, .links {
+      width: 90%;
+      text-align: center;
+      margin: 10px auto;
+    }
+  }
+}

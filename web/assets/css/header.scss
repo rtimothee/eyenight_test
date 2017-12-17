@@ -8,19 +8,31 @@ header {
   top: 0;
   width:100%;
   z-index: 100;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   h1 {
     display: inline-block;
     max-width: 50%;
     margin: 0;
     img {
-      max-height: 50px;
+      max-width: 215px;
+      width: 100%;
     }
   }
 
   nav {
-    float: right;
-    ul{}
+    flex: 1;
+    max-width: 500px;
+
+    ul{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      flex-wrap: nowrap;
+    }
     li{
       list-style: none;
       display: inline-block;
@@ -35,6 +47,23 @@ header {
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+ header{
+   position: relative;
+ }
+}
+@media screen and (max-width: 560px) {
+  header{
+    display: block;
+    text-align: center;
+
+    ul{
+      padding: 0;
+      margin-bottom: 5px;
     }
   }
 }

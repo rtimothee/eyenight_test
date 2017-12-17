@@ -13,7 +13,7 @@
 
                 if ("" === document.getElementById("content_" + id).innerHTML) {
                     event_content.innerHTML = "<div class='loader_container'><div class='loader'></div></div>";
-                    event_content.className = "event_content show";
+
                     var xhttp = new XMLHttpRequest();
 
                     xhttp.onreadystatechange = function () {
@@ -25,6 +25,7 @@
                     xhttp.open("GET", url, true);
                     xhttp.send();
                 }
+                event_content.className = "event_content show";
 
             } else if("undefined" !== typeof button.childNodes[1] && "expand_less" === button.childNodes[1].innerHTML){
                 button.childNodes[1].innerHTML = "expand_more";
