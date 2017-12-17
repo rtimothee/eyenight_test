@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
+{% block body_class %}full_picture{% endblock %}
 
 {% block body %}
+    <div class="center_form">
+        <h2>Register</h2>
     {% for label, messages in app.flashes(['warning', 'error']) %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}">
@@ -11,5 +14,6 @@
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    {{ form_end(form) }}s
+    {{ form_end(form) }}
+    </div>
 {% endblock %}

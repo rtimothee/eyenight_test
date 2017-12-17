@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
+{% block body_class %}full_picture{% endblock %}
 
 {% block body %}
+    <div class="center_form">
+        <h2>Connexion</h2>
 
-    {% for label, messages in app.flashes(['warning', 'error']) %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}">
-                {{ message }}
-            </div>
+        {% for label, messages in app.flashes(['warning', 'error']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

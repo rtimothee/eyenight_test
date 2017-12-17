@@ -1,0 +1,21 @@
+footer{
+  background: $background;
+
+  #copyright, .links{
+    vertical-align:middle;
+    display: inline-block;
+    width: 49%
+  }
+
+  .links{
+    text-align: right;
+    a{
+      color: $title-color;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+}

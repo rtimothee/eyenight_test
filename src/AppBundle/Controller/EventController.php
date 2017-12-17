@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,15 +27,14 @@ class EventController extends Controller implements AuthController
     }
 
     /**
-     * @Route("/{id}/{name}", name="show_event")
+     * @Route("/{id}", name="show_event")
      */
-    public function showEvent($id, $name){
+    public function showEvent($id){
 
         $eventManager = $this->get('app.manager.event');
-        dump($id);
         $event = $eventManager->getEvent($id);
-        dump($event);
-        return $this->render('event/show.html.twig', [
+
+        return $this->render('event/content.html.twig', [
             "event" => $event
         ]);
     }

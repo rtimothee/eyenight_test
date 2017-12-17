@@ -1,0 +1,40 @@
+<div class="event_details">
+    <div class="location">
+        <i class="material-icons">location_on</i>
+        <p>{{ event.locationName }}<br/>
+            {{ event.address }}<br/>
+            {{ event.city }}
+        </p>
+    </div>
+    <div class="reservation_time">
+        <div class="time"><i class="material-icons">date_range</i>
+            <p>
+                {{ event.getStartDate()|date('d/m/Y H:i:s') }}<br/>
+                to<br/>
+                {{ event.getEndDate()|date('d/m/Y H:i:s') }}
+            </p>
+        </div>
+        <div class="reservation">
+            <i class="material-icons">supervisor_account</i>
+            <p>{{ event.getNumberOfEntranceTicketsBought() }} participants</p>
+        </div>
+    </div>
+</div>
+<div class="products">
+    <h4>Products</h4>
+    <table>
+        {% for product in event.getProducts() %}
+            <tr>
+                <td>{{ product.getName() }}</td>
+                <td>{{ (product.getMaxQuantity() - product.quantityLeft()) }} / {{ product.getMaxQuantity() }}</td>
+                <td>
+                    {% if product.getPrice() != null %}
+                        {{ product.getPrice() }} €
+                    {% else %}
+                        Free
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

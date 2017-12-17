@@ -21,9 +21,9 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/cgv", name="cgv")
+     * @Route("/mentions", name="mentions")
      */
     public function cgvAction(){
-        return $this->render('default/cgv.html.twig', []);
+        return $this->render('default/mentions.html.twig', []);
     }
 }

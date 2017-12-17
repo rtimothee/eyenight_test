@@ -1,23 +1,28 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>List events</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Start</th>
-            <th>End</th>
-            <th></th>
-        </tr>
-    {% for event in events %}
-        <tr>
-            <td>{{ event.getName() }}</td>
-            <td>{{ event.getCity() }}</td>
-            <td>{{ event.getStartDate()|date("d/m/Y") }}</td>
-            <td>{{ event.getEndDate()|date("d/m/Y") }}</td>
-            <td><a href="{{ path('show_event', {'id': event.getId(), 'name':event.getName|url_encode}) }}">+</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+    <div id="events" class="container">
+        <h2>Events</h2>
+        <div class="event_list">
+            {% for event in events %}
+                <div id="event_{{ event.getId() }}" class="event_item">
+                    <div class="event_header">
+                        <img src="{{ event.getImage()['url'] }}" alt="{{ event.getName() }}"/>
+                        <div class="legend">
+                            <div class="event_block_title">
+                                <h3>{{ event.getName() }}</h3>
+                                <button class="more_event_details more"
+                                        data-url="{{ path('show_event', {'id': event.getId()}) }}"
+                                        data-id="{{ event.getId() }}">
+                                    <i class="material-icons">expand_more</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event_content" id="content_{{ event.getId() }}"></div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
 {% endblock %}
