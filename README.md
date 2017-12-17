@@ -34,3 +34,5 @@ A améliorer/ajouter
 - Améliorer le système de connexion pour utiliser les Rôles Symfony et le SecurityBundle
 - Passer tout le Front en SPA (Single Page Application) afin d'obtenir plus de dynamisme et de fluidité
 - Liste des événements à trier par distance
+- Compatibilité navigateur
+
